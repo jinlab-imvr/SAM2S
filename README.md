@@ -1,4 +1,5 @@
 # SAM2S: Segment Anything in Surgical Videos via Semantic Long-term Tracking
+[![Project Page](https://img.shields.io/badge/Project-Page-green)](https://jinlab-imvr.github.io/SAM2S)
 
 <div align="center">
 
