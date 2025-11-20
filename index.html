@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Meta tags for social media -->
+  <meta name="description" content="SAM2S: Segment Anything in Surgical Videos via Semantic Long-term Tracking - A foundation model for surgical video segmentation">
+  <meta property="og:title" content="SAM2S: Segment Anything in Surgical Videos via Semantic Long-term Tracking"/>
+  <meta property="og:description" content="Real-time surgical video segmentation with robust long-term tracking at 68 FPS"/>
+  <meta property="og:url" content="https://github.com/jinlab-imvr/SAM2S"/>
+  <meta property="og:image" content="static/images/structure.png" />
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+
+  <meta name="twitter:title" content="SAM2S: Surgical Video Segmentation">
+  <meta name="twitter:description" content="Real-time surgical video segmentation with robust long-term tracking">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <meta name="keywords" content="surgical video segmentation, computer-assisted surgery, interactive video object segmentation, SAM2, long-term tracking, medical AI">
+
+  <title>SAM2S: Segment Anything in Surgical Videos via Semantic Long-term Tracking</title>
+  <link rel="icon" type="image/png" href="static/images/logo.jpg">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <!-- CSS Libraries -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+  <style>
+    body {
+      font-family: 'Noto Sans', sans-serif;
+    }
+
+    .publication-title {
+      font-family: 'Google Sans', sans-serif;
+    }
+
+    .hero {
+      background: white;
+    }
+
+    .author-block a {
+      color: #3273dc;
+      text-decoration: none;
+    }
+
+    .author-block a:hover {
+      text-decoration: underline;
+    }
+
+    .video-container {
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      margin: 2rem auto;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .video-container video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .video-caption {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      color: #4a4a4a;
+      font-style: italic;
+    }
+
+    .content-section {
+      padding: 3rem 1.5rem;
+    }
+
+    .method-figure {
+      max-width: 100%;
+      height: auto;
+      margin: 2rem auto;
+      display: block;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .button {
+      margin: 0.25rem;
+    }
+
+    .highlight-box {
+      background-color: #f5f5f5;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin: 1rem 0;
+      border-left: 4px solid #667eea;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .stat-box {
+      text-align: center;
+      padding: 1.5rem;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #667eea;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: #4a4a4a;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">
+              SAM2S: Segment Anything in Surgical Videos via Semantic Long-term Tracking
+            </h1>
+
+            <!-- Authors -->
+            <div class="is-size-5 publication-authors" style="margin-top: 1.5rem;">
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?hl=en&user=ZSmTNXEAAAAJ" target="_blank">Haofeng Liu</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=ECCd0hwAAAAJ&hl=en" target="_blank">Ziyue Wang</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=fTnoBDAAAAAJ&hl=en" target="_blank">Sudhanshu Mishra</a><sup>2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=ECCd0hwAAAAJ&hl=en" target="_blank">Mingqi Gao</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=Sq5AJxgAAAAJ&hl=en" target="_blank">Guanyi Qin</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                Chang Han Low<sup>1</sup>,
+              </span>
+              <span class="author-block">
+                Alex Y. W. Kong<sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://yuemingjin.github.io/" target="_blank">Yueming Jin</a><sup>1*</sup>
+              </span>
+            </div>
+
+            <!-- Affiliations -->
+            <div class="is-size-6 publication-authors" style="margin-top: 1rem;">
+              <div><span class="author-block"><sup>1</sup>National University of Singapore</span></div>
+              <div><span class="author-block"><sup>2</sup>The University of Sheffield</span></div>
+              <div style="margin-top: 0.5rem;"><span class="author-block"><sup>*</sup>Corresponding author</span></div>
+            </div>
+
+            <!-- Links -->
+            <div class="column has-text-centered" style="margin-top: 1.5rem;">
+              <div class="publication-links">
+                <!-- Paper PDF -->
+<!--                <span class="link-block">-->
+<!--                  <a href="https://www.arxiv.org/pdf/2505.XXXXX" target="_blank"-->
+<!--                     class="external-link button is-normal is-rounded is-dark">-->
+<!--                    <span class="icon"><i class="fas fa-file-pdf"></i></span>-->
+<!--                    <span>Paper</span>-->
+<!--                  </a>-->
+<!--                </span>-->
+
+                <!-- GitHub -->
+                <span class="link-block">
+                  <a href="https://github.com/jinlab-imvr/SAM2S" target="_blank"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fab fa-github"></i></span>
+                    <span>Code</span>
+                  </a>
+                </span>
+
+                <!-- arXiv -->
+<!--                <span class="link-block">-->
+<!--                  <a href="https://www.arxiv.org/abs/2505.XXXXX" target="_blank"-->
+<!--                     class="external-link button is-normal is-rounded is-dark">-->
+<!--                    <span class="icon"><i class="ai ai-arxiv"></i></span>-->
+<!--                    <span>arXiv</span>-->
+<!--                  </a>-->
+<!--                </span>-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Demonstrations -->
+  <section class="section content-section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Video Demonstrations</h2>
+      <p class="has-text-centered subtitle">
+        SAM2S achieves real-time performance at 68 FPS with robust long-term tracking across diverse surgical procedures
+      </p>
+
+      <!-- Video 1: CIS-Test -->
+      <div class="video-container">
+        <video controls muted loop>
+          <source src="static/videos/CIS-Test_web.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <p class="video-caption">
+        <strong>CIS-Test Dataset:</strong> Long-term tracking in cholecystectomy (≈30 minutes duration)
+      </p>
+
+      <!-- Video 2: EndoVis18 -->
+      <div class="video-container">
+        <video controls muted loop>
+          <source src="static/videos/EndoVis18_web.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <p class="video-caption">
+        <strong>EndoVis18 Dataset:</strong> Zero-shot generalization on unseen nephrectomy procedures
+      </p>
+
+      <!-- Video 3: RARP50 -->
+      <div class="video-container">
+        <video controls muted loop>
+          <source src="static/videos/RARP50_web.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <p class="video-caption">
+        <strong>RARP50 Dataset:</strong> Robust segmentation in robot-assisted radical prostatectomy
+      </p>
+    </div>
+  </section>
+
+  <!-- Abstract -->
+  <section class="section hero is-light content-section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Surgical video segmentation is crucial for computer-assisted surgery, enabling precise localization and tracking
+              of instruments and tissues. Interactive Video Object Segmentation (iVOS) models such as Segment Anything Model
+              2 (SAM2) provide prompt-based flexibility beyond methods with predefined categories, but face challenges in surgical
+              scenarios due to the domain gap and limited long-term tracking. To address these limitations, we construct
+              <strong>SA-SV</strong>, the largest surgical iVOS benchmark with instance-level spatio-temporal annotations (masklets)
+              spanning eight procedure types (61k frames, 1.6k masklets), enabling comprehensive development and evaluation for
+              long-term tracking and zero-shot generalization.
+            </p>
+            <p>
+              Building on SA-SV, we propose <strong>SAM2S</strong>, a foundation model enhancing SAM2 for Surgical iVOS through:
+              (1) <strong>DiveMem</strong>, a trainable diverse memory mechanism for robust long-term tracking;
+              (2) <strong>Temporal Semantic Learning (TSL)</strong> for instrument understanding; and
+              (3) <strong>Ambiguity-Resilient Learning (ARL)</strong> to mitigate annotation inconsistencies across multi-source datasets.
+              Extensive experiments demonstrate that fine-tuning on SA-SV enables substantial performance gains, with SAM2 improving
+              by 12.99 average J&F over vanilla SAM2. SAM2S further advances performance to 80.42 average J&F, surpassing vanilla
+              and fine-tuned SAM2 by 17.10 and 4.11 points respectively, while maintaining 68 FPS real-time inference and strong
+              zero-shot generalization.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Statistics -->
+  <section class="section content-section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">SA-SV Benchmark</h2>
+      <p class="has-text-centered subtitle">The largest surgical iVOS benchmark with comprehensive masklet annotations</p>
+
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-number">572</div>
+          <div class="stat-label">Videos</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">61K</div>
+          <div class="stat-label">Frames</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">1.6K</div>
+          <div class="stat-label">Masklets</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">8</div>
+          <div class="stat-label">Procedure Types</div>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <h4 class="title is-5">Covered Surgical Procedures</h4>
+        <div class="content">
+          <ul>
+            <li><strong>Cholecystectomy:</strong> Endoscapes, CholecSeg8k, CholecInstanceSeg (CIS)</li>
+            <li><strong>Colonoscopy:</strong> PolypGen, Kvasir-SEG, BKAI-IGH, CVC-ClinicDB</li>
+            <li><strong>Gynecology:</strong> SurgAI3.8k</li>
+            <li><strong>Hysterectomy:</strong> AutoLaparo, ART-Net, Hyst-YT</li>
+            <li><strong>Myotomy:</strong> DSAD</li>
+            <li><strong>Nephrectomy:</strong> EndoVis17, EndoVis18</li>
+            <li><strong>Prostatectomy:</strong> GraSP, RARP50</li>
+            <li><strong>Multi-procedural:</strong> RoboTool</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Method Overview -->
+  <section class="section content-section" style="background-color: #fafafa;">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Proposed Method</h2>
+
+      <img src="static/images/architecture.png"
+           alt="SAM2S Architecture"
+           class="method-figure">
+      <p class="has-text-centered has-text-grey" style="margin-top: 1rem;">
+        <strong>Overview of SAM2S framework</strong> integrating DiveMem, TSL, and ARL for robust surgical video segmentation
+      </p>
+
+      <div class="content" style="margin-top: 3rem;">
+        <h3 class="title is-4">Key Innovations</h3>
+
+        <div class="highlight-box">
+          <h4 class="title is-5">
+            <span class="icon has-text-info"><i class="fas fa-memory"></i></span>
+            DiveMem: Diverse Memory for Long-term Tracking
+          </h4>
+          <p>
+            A trainable diverse memory mechanism that employs hybrid temporal sampling during training and diversity-based
+            frame selection during inference. DiveMem addresses viewpoint overfitting in long-term surgical tracking by
+            maintaining both diverse long-term memory and complete short-term memory, ensuring comprehensive temporal context
+            that training-free approaches fail to maintain.
+          </p>
+        </div>
+
+        <div class="highlight-box">
+          <h4 class="title is-5">
+            <span class="icon has-text-success"><i class="fas fa-brain"></i></span>
+            TSL: Temporal Semantic Learning
+          </h4>
+          <p>
+            Leverages semantic categories of surgical instruments through vision-language contrastive learning with CLIP.
+            TSL enables semantic-aware tracking by incorporating learnable CLS tokens that attend to memory features and
+            perform cross-attention with current frame features, while preserving class-agnostic generalization capability.
+          </p>
+        </div>
+
+        <div class="highlight-box">
+          <h4 class="title is-5">
+            <span class="icon has-text-warning"><i class="fas fa-shield-alt"></i></span>
+            ARL: Ambiguity-Resilient Learning
+          </h4>
+          <p>
+            Handles annotation inconsistencies across multi-source datasets through uniform label softening using Gaussian
+            kernel convolution. ARL transforms discrete annotation spaces into continuous probability distributions, improving
+            model calibration and robustness at ambiguous tissue boundaries while mitigating conflicting supervision signals
+            from varying labeling standards.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <section class="section content-section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Performance Highlights</h2>
+
+      <div class="columns is-multiline" style="margin-top: 2rem;">
+        <div class="column is-half">
+          <div class="box">
+            <h4 class="title is-5 has-text-centered">Zero-shot Generalization</h4>
+            <div class="content">
+              <p class="has-text-centered">
+                <span class="stat-number" style="font-size: 3rem;">80.42</span><br>
+                <span class="stat-label">Average J&F (3-click)</span>
+              </p>
+              <p class="has-text-centered has-text-grey">
+                +17.10 over vanilla SAM2<br>
+                +4.11 over fine-tuned SAM2
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-half">
+          <div class="box">
+            <h4 class="title is-5 has-text-centered">Real-time Performance</h4>
+            <div class="content">
+              <p class="has-text-centered">
+                <span class="stat-number" style="font-size: 3rem;">68</span><br>
+                <span class="stat-label">FPS (Frames Per Second)</span>
+              </p>
+              <p class="has-text-centered has-text-grey">
+                Real-time inference on A6000 GPU<br>
+                Suitable for clinical deployment
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-half">
+          <div class="box">
+            <h4 class="title is-5 has-text-centered">Long-term Tracking</h4>
+            <div class="content">
+              <ul style="font-size: 0.95rem;">
+                <li>CIS-Test (≈30 min): <strong>89.65 J&F</strong> (+9.56)</li>
+                <li>RARP50 (325s): <strong>79.47 J&F</strong> (+2.96)</li>
+                <li>Hyst-YT (329s): <strong>87.46 J&F</strong> (+3.57)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-half">
+          <div class="box">
+            <h4 class="title is-5 has-text-centered">Cross-procedure Generalization</h4>
+            <div class="content">
+              <ul style="font-size: 0.95rem;">
+                <li>EndoVis17 (unseen): <strong>86.72 J&F</strong></li>
+                <li>EndoVis18-I (unseen): <strong>82.37 J&F</strong></li>
+                <li>Strong performance on nephrectomy without training data</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="notification is-info is-light" style="margin-top: 2rem;">
+        <p class="has-text-centered">
+          <strong>Note:</strong> All test subsets remain completely unseen during training, ensuring rigorous evaluation
+          of zero-shot generalization across diverse surgical procedures.
+        </p>
+      </div>
+    </div>
+  </section>
+
+<!--  &lt;!&ndash; BibTeX Citation &ndash;&gt;-->
+<!--  <section class="section content-section" style="background-color: #fafafa;">-->
+<!--    <div class="container is-max-desktop">-->
+<!--      <h2 class="title is-3 has-text-centered">Citation</h2>-->
+<!--      <div class="box">-->
+<!--        <pre style="background-color: #f5f5f5; padding: 1rem; border-radius: 4px; overflow-x: auto;"><code>@article{liu2025sam2s,-->
+<!--  title={SAM2S: Segment Anything in Surgical Videos via Semantic Long-term Tracking},-->
+<!--  author={Liu, Haofeng and Wang, Ziyue and Mishra, Sudhanshu and Gao, Mingqi and-->
+<!--          Qin, Guanyi and Low, Chang Han and Kong, Alex Y. W. and Jin, Yueming},-->
+<!--  journal={arXiv preprint arXiv:2505.XXXXX},-->
+<!--  year={2025}-->
+<!--}</code></pre>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </section>-->
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content has-text-centered">
+            <p>
+              This page was built using the
+              <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>
+              which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+              <br>
+              This website is licensed under a
+              <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">
+                Creative Commons Attribution-ShareAlike 4.0 International License
+              </a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
