@@ -1,5 +1,8 @@
 # SAM2S: Segment Anything in Surgical Videos via Semantic Long-term Tracking
 [![Project Page](https://img.shields.io/badge/Project-Page-green)](https://jinlab-imvr.github.io/SAM2S)
+[![arXiv](https://img.shields.io/badge/arXiv-2511.16618-b31b1b.svg)](https://arxiv.org/abs/2511.16618)
+[![Paper](https://img.shields.io/badge/Paper-PDF-red)](https://arxiv.org/pdf/2511.16618.pdf)
+
 
 <div align="center">
 
@@ -26,3 +29,15 @@ SAM2S addresses these limitations through:
 ![architecture](./assets/intro.png)
 <p align="center"><i>Overall of SAM2S</i></p>
 
+![architecture](./assets/architecture.png)
+<p align="center"><i>SAM2S Framework Architecture</i></p>
+
+## Citation
+```bibtex
+@article{liu2025sam2s,
+  title={SAM2S: Segment Anything in Surgical Videos via Semantic Long-term Tracking},
+  author={Liu, Haofeng and Wang, Ziyue and Mishra, Sudhanshu and Gao, Mingqi and Qin, Guanyi and Low, Chang Han and Kong, Alex Y. W. and Jin, Yueming},
+  journal={arXiv preprint arXiv:2511.16618},
+  year={2025}
+}
+```
