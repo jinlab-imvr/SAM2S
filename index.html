@@ -127,6 +127,22 @@
       color: #4a4a4a;
       margin-top: 0.5rem;
     }
+
+    .related-work-card {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .related-work-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .related-work-card .content {
+      flex-grow: 1;
+    }
   </style>
 </head>
 <body>
@@ -147,10 +163,10 @@
                 <a href="https://scholar.google.com/citations?hl=en&user=ZSmTNXEAAAAJ" target="_blank">Haofeng Liu</a><sup>1</sup>,
               </span>
               <span class="author-block">
-                <a href="https://scholar.google.com/citations?user=ECCd0hwAAAAJ&hl=en" target="_blank">Ziyue Wang</a><sup>1</sup>,
+                <a href="https://scholar.google.com/citations?user=fTnoBDAAAAAJ&hl=en" target="_blank">Ziyue Wang</a><sup>1</sup>,
               </span>
               <span class="author-block">
-                <a href="https://scholar.google.com/citations?user=fTnoBDAAAAAJ&hl=en" target="_blank">Sudhanshu Mishra</a><sup>1</sup>,
+                <a href="https://scholar.google.com/citations?user=0lWcehcAAAAJ&hl=en" target="_blank">Sudhanshu Mishra</a><sup>1</sup>,
               </span>
               <span class="author-block">
                 <a href="https://scholar.google.com/citations?user=ECCd0hwAAAAJ&hl=en" target="_blank">Mingqi Gao</a><sup>2</sup>,
@@ -160,7 +176,7 @@
                 <a href="https://scholar.google.com/citations?user=Sq5AJxgAAAAJ&hl=en" target="_blank">Guanyi Qin</a><sup>1</sup>,
               </span>
               <span class="author-block">
-                Chang Han Low<sup>1</sup>,
+                  <a href="https://scholar.google.com/citations?user=Gk0NHA0AAAAJ&hl=en" target="_blank">Chang Han Low</a><sup>1</sup>,
               </span>
               <span class="author-block">
                 Alex Y. W. Kong<sup>1</sup>,
@@ -458,7 +474,155 @@
       </div>
     </div>
   </section>
+  <!-- Related Work -->
+  <section class="section content-section" style="background-color: #fafafa;">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Related Work</h2>
+      <p class="has-text-centered subtitle" style="margin-bottom: 2.5rem;">
+        Explore our other works on surgical video segmentation with SAM2
+      </p>
 
+      <div class="columns is-multiline">
+        <!-- Surgical SAM 2 -->
+        <div class="column is-half">
+          <div class="box related-work-card">
+            <div class="content">
+              <h4 class="title is-5">
+                <a href="https://github.com/jinlab-imvr/Surgical-SAM-2" target="_blank" style="color: #3273dc;">
+                  <span class="icon-text">
+                    <span class="icon"><i class="fas fa-bolt"></i></span>
+                    <span>Surgical SAM 2: Real-time Segment Anything in Surgical Video by Efficient Frame Pruning</span>
+                  </span>
+                </a>
+              </h4>
+              <p class="subtitle is-6 has-text-grey" style="margin-top: 0.5rem;">
+                <span class="tag is-link is-light">NeurIPS 2024 Workshop AIM-FM</span>
+              </p>
+              <p class="subtitle is-7 has-text-grey-light" style="margin-top: 0.3rem; margin-bottom: 0;">
+                Haofeng Liu, Erli Zhang, Junde Wu, Mingxuan Hong, Yueming Jin
+              </p>
+              <p style="margin-top: 1rem; font-size: 0.95rem;">
+                An innovative model that integrates SAM2 with an efficient frame pruning mechanism for real-time surgical
+                video segmentation. Dramatically reduces memory usage and computational cost while achieving superior performance.
+              </p>
+
+              <!-- Architecture Image -->
+              <div style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
+                <img src="static/images/surgicalsam2.jpeg"
+                     alt="Surgical SAM 2 Architecture"
+                     style="width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <p style="text-align: center; font-size: 0.85rem; color: #7a7a7a; margin-top: 0.5rem; font-style: italic;">
+                  Surgical SAM 2 framework with efficient frame pruning
+                </p>
+              </div>
+
+              <div style="margin-top: 1.5rem;">
+                <p class="has-text-weight-semibold" style="font-size: 0.9rem; margin-bottom: 0.5rem;">Key Features:</p>
+                <ul style="margin-left: 1.2rem; font-size: 0.9rem;">
+                  <li>Achieves <strong>3× FPS (86 FPS)</strong> for real-time segmentation</li>
+                  <li>Dramatically reduces memory usage and computational cost</li>
+                  <li>Enables real-time surgical segmentation in resource-constrained environments</li>
+                  <li>Maintains superior performance while reducing computational overhead</li>
+                </ul>
+              </div>
+            </div>
+            <div style="margin-top: auto; padding-top: 1rem;">
+              <a href="https://arxiv.org/abs/2408.07931" target="_blank"
+                 class="button is-small is-dark is-outlined">
+                <span class="icon"><i class="ai ai-arxiv"></i></span>
+                <span>arXiv</span>
+              </a>
+              <a href="https://github.com/jinlab-imvr/Surgical-SAM-2" target="_blank"
+                 class="button is-small is-link is-outlined">
+                <span class="icon"><i class="fab fa-github"></i></span>
+                <span>GitHub</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ReSurgSAM2 -->
+        <div class="column is-half">
+          <div class="box related-work-card">
+            <div class="content">
+              <h4 class="title is-5">
+                <a href="https://heverlaw.github.io/ReSurgSAM2/" target="_blank" style="color: #3273dc;">
+                  <span class="icon-text">
+                    <span class="icon"><i class="fas fa-comments"></i></span>
+                    <span>ReSurgSAM2: Referring Segment Anything in Surgical Video via Credible Long-term Tracking</span>
+                  </span>
+                </a>
+              </h4>
+              <p class="subtitle is-6 has-text-grey" style="margin-top: 0.5rem;">
+                <span class="tag is-success is-light">MICCAI 2025 (Early Accept)</span>
+              </p>
+              <p class="subtitle is-7 has-text-grey-light" style="margin-top: 0.3rem; margin-bottom: 0;">
+                Haofeng Liu, Mingqi Gao, Xuxiao Luo, Ziyue Wang, Guanyi Qin, Junde Wu, Yueming Jin
+              </p>
+              <p style="margin-top: 1rem; font-size: 0.95rem;">
+                A two-stage surgical referring segmentation framework that leverages SAM2 with text-referred target detection
+                using Cross-modal Spatial-Temporal Mamba (CSTMamba) for precise detection and credible long-term tracking.
+              </p>
+
+              <!-- Architecture Image -->
+              <div style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
+                <img src="static/images/resurgsam2.png"
+                     alt="ReSurgSAM2 Architecture"
+                     style="width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <p style="text-align: center; font-size: 0.85rem; color: #7a7a7a; margin-top: 0.5rem; font-style: italic;">
+                  ReSurgSAM2 framework with CSTMamba and credible tracking
+                </p>
+              </div>
+
+              <div style="margin-top: 1.5rem;">
+                <p class="has-text-weight-semibold" style="font-size: 0.9rem; margin-bottom: 0.5rem;">Key Features:</p>
+                <ul style="margin-left: 1.2rem; font-size: 0.9rem;">
+                  <li>Cross-modal Spatial-Temporal Mamba (CSTMamba) for text-guided segmentation</li>
+                  <li>Credible Initial Frame Selection (CIFS) for reliable tracking initialization</li>
+                  <li>Diversity-driven Long-term Memory (DLM) for consistent tracking</li>
+                  <li>Real-time operation at <strong>61.2 FPS</strong></li>
+                </ul>
+              </div>
+            </div>
+            <div style="margin-top: auto; padding-top: 1rem;">
+              <a href="https://www.arxiv.org/abs/2505.08581" target="_blank"
+                 class="button is-small is-dark is-outlined">
+                <span class="icon"><i class="ai ai-arxiv"></i></span>
+                <span>arXiv</span>
+              </a>
+              <a href="https://heverlaw.github.io/ReSurgSAM2/" target="_blank"
+                 class="button is-small is-link is-outlined">
+                <span class="icon"><i class="fas fa-globe"></i></span>
+                <span>Project Page</span>
+              </a>
+              <a href="https://github.com/jinlab-imvr/ReSurgSAM2" target="_blank"
+                 class="button is-small is-link is-outlined">
+                <span class="icon"><i class="fab fa-github"></i></span>
+                <span>GitHub</span>
+              </a>
+              <a href="https://youtu.be/z4Ez4TXVQL4" target="_blank"
+                 class="button is-small is-danger is-outlined">
+                <span class="icon"><i class="fab fa-youtube"></i></span>
+                <span>Video</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="notification is-info is-light" style="margin-top: 2rem;">
+        <p class="has-text-centered" style="font-size: 0.95rem;">
+          <strong>SAM2 Series for Surgical Applications:</strong> Our research group has developed a comprehensive suite
+          of approaches to adapt Segment Anything Model 2 (SAM2) for surgical video understanding.
+          <strong>Surgical SAM 2</strong> achieves real-time performance (86 FPS) through efficient frame pruning,
+          <strong>ReSurgSAM2</strong> introduces text-guided referring segmentation with credible tracking initialization
+          for language-driven surgical scene understanding, and
+          <strong>SAM2S</strong> (this work) provides the most generalizable solution with semantic long-term tracking
+          and diverse memory mechanisms across diverse surgical procedures.
+        </p>
+      </div>
+    </div>
+  </section>
   <!-- BibTeX Citation -->
   <section class="section content-section" style="background-color: #fafafa;">
     <div class="container is-max-desktop">
