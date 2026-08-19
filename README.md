@@ -1,43 +1,53 @@
-# SAM2S: Segment Anything in Surgical Videos via Semantic Long-term Tracking
-[![Project Page](https://img.shields.io/badge/Project-Page-green)](https://jinlab-imvr.github.io/SAM2S)
-[![arXiv](https://img.shields.io/badge/arXiv-2511.16618-b31b1b.svg)](https://arxiv.org/abs/2511.16618)
-[![Paper](https://img.shields.io/badge/Paper-PDF-red)](https://arxiv.org/pdf/2511.16618.pdf)
+# SAM2S is now **SurgSLOT**
 
+> **This project has been renamed.**
+> SAM2S is released as **SurgSLOT: Segment Anything in Surgical Videos via Semantic Long-term Tracking**.
+> **Code, checkpoints, and the benchmark are available at → [github.com/jinlab-imvr/SurgSLOT](https://github.com/jinlab-imvr/SurgSLOT)**
+> This repository is kept only as a pointer to the new one and is no longer updated.
 
 <div align="center">
 
+[![Code](https://img.shields.io/badge/Code-SurgSLOT-black?logo=github)](https://github.com/jinlab-imvr/SurgSLOT)
+[![Project Page](https://img.shields.io/badge/Project-Page-green)](https://jinlab-imvr.github.io/SurgSLOT/)
+[![arXiv](https://img.shields.io/badge/arXiv-2511.16618-b31b1b.svg)](https://arxiv.org/abs/2511.16618)
+[![Checkpoints](https://img.shields.io/badge/%F0%9F%A4%97%20Checkpoints-HeverLaw%2FSurgSLOT-yellow)](https://huggingface.co/HeverLaw/SurgSLOT)
+
 </div>
 
-Official implementation of SAM2S, a foundation model that enhances SAM2 for surgical interactive Video Object Segmentation (iVOS) through semantic long-term tracking and domain-specific adaptations. The source code is coming soon.
+## Where everything moved
 
->Haofeng Liu, Ziyue Wang, Sudhanshu Mishra, Mingqi Gao, Guanyi Qin, Chang Han Low, Alex Y. W. Kong, Yueming Jin
+| | |
+|---|---|
+| Code (SurgSLOT-SAM2 and SurgSLOT-SAM3) | https://github.com/jinlab-imvr/SurgSLOT |
+| Checkpoints | https://huggingface.co/HeverLaw/SurgSLOT |
+| Project page | https://jinlab-imvr.github.io/SurgSLOT/ |
+| Paper | https://arxiv.org/abs/2511.16618 (same arXiv entry) |
 
+Issues and questions should be opened in the [SurgSLOT repository](https://github.com/jinlab-imvr/SurgSLOT/issues).
 
+## What SurgSLOT is
 
-## Overview
+SurgSLOT is a promptable surgical video segmentation framework that equips both **SAM 2** and **SAM 3** with semantic long-term tracking. A user specifies the target with a first-frame visual prompt, and the model tracks it throughout the video, recovering the target after long disappearances instead of drifting to visually similar distractors. It is developed together with **iSurg**, a generalization-oriented surgical segmentation benchmark unifying 16 datasets across six procedure types.
 
+Compared with the earlier SAM2S preprint, the released version adds the SAM 3 backbone, the extended iSurg benchmark, and the semantic-driven long-term memory (SLM) module. See the [SurgSLOT README](https://github.com/jinlab-imvr/SurgSLOT#readme) for installation, training, evaluation, and full results.
 
-Surgical video segmentation is crucial for computer-assisted surgery, enabling precise localization and tracking of instruments and tissues. While SAM2 provides prompt-based flexibility, it faces significant challenges in surgical scenarios due to domain gaps and limited long-term tracking capabilities.
+<p align="center">
+  <img src="https://jinlab-imvr.github.io/SurgSLOT/static/images/intro.png" width="95%" alt="Overview">
+</p>
 
-SAM2S addresses these limitations through:
-
-1. **SA-SV Benchmark Construction**: Large-scale surgical iVOS dataset spanning diverse procedures (cholecystectomy, colonoscopy, nephrectomy, prostatectomy, etc.) with instance-level spatio-temporal annotations
-2. **Enhanced Long-term Tracking**: DiveMem employs hybrid temporal sampling during training and diversity-based frame selection during inference
-3. **Semantic Understanding**: TSL leverages semantic categories of surgical instruments while preserving class-agnostic generalization
-4. **Multi-source Robustness**: ARL handles annotation ambiguities through uniform label softening
-
-![architecture](./assets/intro.png)
-<p align="center"><i>Overall of SAM2S</i></p>
-
-![architecture](./assets/architecture.png)
-<p align="center"><i>SAM2S Framework Architecture</i></p>
+<p align="center">
+  <img src="https://jinlab-imvr.github.io/SurgSLOT/static/images/architecture.png" width="95%" alt="Architecture">
+</p>
 
 ## Citation
+
 ```bibtex
-@article{liu2025sam2s,
-  title={SAM2S: Segment Anything in Surgical Videos via Semantic Long-term Tracking},
-  author={Liu, Haofeng and Wang, Ziyue and Mishra, Sudhanshu and Gao, Mingqi and Qin, Guanyi and Low, Chang Han and Kong, Alex Y. W. and Jin, Yueming},
-  journal={arXiv preprint arXiv:2511.16618},
-  year={2025}
+@article{liu2025surgslot,
+  title   = {SurgSLOT: Segment Anything in Surgical Videos via Semantic Long-term Tracking},
+  author  = {Haofeng Liu and Ziyue Wang and Sudhanshu Mishra and Mingqi Gao and
+             Guanyi Qin and Chang Han Low and Alex Y. W. Kong and Zhu Zhuo and
+             Huazhu Fu and Joseph S. Ng and Yueming Jin},
+  journal = {arXiv preprint arXiv:2511.16618},
+  year    = {2025}
 }
 ```
